@@ -3,6 +3,7 @@
 
 #define BOARD_SIZE 8
 #define NAME_LENGTH 20
+#define NUM 9
 
 enum discColour
 {
