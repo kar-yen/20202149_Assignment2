@@ -11,9 +11,9 @@ int main()
 
     disc board[BOARD_SIZE][BOARD_SIZE]; // Struct of 2D array for board
 
-    int(*arr)[NUM] = calloc(NUM * 2, sizeof(int));
+    int(*arr)[NUM] = calloc(NUM * NUM, sizeof(int));
 
-    for(int i = 0; i < NUM; i++)
+    /*for(int i = 0; i < NUM; i++)
     {
         for(int j = 0; j < NUM; j++)
         {
@@ -28,7 +28,7 @@ int main()
             printf("%2d", arr[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
     initializePlayer(&p1, &p2); // Initialize player
     initializeBoard(board); // Initialize board
