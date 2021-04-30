@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "initialization.h"
 #include "playGame.h"
 
@@ -11,7 +12,11 @@ int main()
 
     disc board[BOARD_SIZE][BOARD_SIZE]; // Struct of 2D array for board
 
-    int(*arr)[NUM] = calloc(NUM * NUM, sizeof(int));
+    time_t t1;
+    time(&t1);
+    printf("%s\n", ctime(&t1));
+
+    //int(*arr)[8] = calloc(8 * 8, sizeof(int));
 
     /*for(int i = 0; i < NUM; i++)
     {
@@ -34,7 +39,16 @@ int main()
     initializeBoard(board); // Initialize board
     printBoard(board, p1, p2); // Print the board
 
-    //takeTurn(board, &p1, &p2);
+    takeTurn(board, &p1, &p2);
+
+    int min, sec;
+    time_t t2;
+    time(&t2);
+    printf("%s\n", ctime(&t2));
+    printf("%.2lf\n", difftime(t2, t1));
+    min = difftime(t2, t1) / 60;
+    sec = difftime(t2, t1) - (min * 60);
+    printf("Total duration: %d min %d sec", min, sec);
 
     return 0;
 }
