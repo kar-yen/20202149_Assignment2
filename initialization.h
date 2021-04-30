@@ -3,7 +3,6 @@
 
 #define BOARD_SIZE 8
 #define NAME_LENGTH 20
-#define NUM 9
 
 enum discColour
 {
@@ -25,6 +24,16 @@ typedef struct disc
     int row;
     int col;
 }disc;
+
+struct PossibleMove
+{
+    int row;
+    int col;
+    struct PossibleMove *nextPtr;
+};
+
+typedef struct PossibleMove possibleMove;
+typedef possibleMove *possibleMovePtr;
 
 void initializePlayer(player *p1, player *p2);
 void initializeBoard(disc board[][BOARD_SIZE]);
