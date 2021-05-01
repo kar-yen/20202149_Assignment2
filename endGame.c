@@ -28,10 +28,7 @@ void mainEnd(disc board[][BOARD_SIZE], player p1, player p2, time_t t1, time_t t
         printf("Total duration: %d min %d sec\n", min, sec);
     }
 
-
     printf("\nFinal result:\n");
-    //printf("Player 1 (Black): %s, Score: %d", p1.name, p1.score);
-    //printf("Player 2 (White): %s, Score: %d", p2.name, p2.score);
 
     if(p1.score > p2.score) // If player 1 has higher score
     {
@@ -175,5 +172,4 @@ void boardFile(disc board[][BOARD_SIZE], FILE *fp)
         fprintf(fp, "%c   ", z - 1 + 'a');
     }
     fprintf(fp, "\n\n");
-
 }
