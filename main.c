@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include "initialization.h"
 #include "playGame.h"
+#include "endGame.h"
 
 int main()
 {
@@ -12,43 +12,21 @@ int main()
 
     disc board[BOARD_SIZE][BOARD_SIZE]; // Struct of 2D array for board
 
-    time_t t1;
-    time(&t1);
-    printf("%s\n", ctime(&t1));
+    time_t startTime; // Variable to hold start time of game
+    time_t endTime; // Variable to hold end time of game
 
-    //int(*arr)[8] = calloc(8 * 8, sizeof(int));
 
-    /*for(int i = 0; i < NUM; i++)
-    {
-        for(int j = 0; j < NUM; j++)
-        {
-            arr[i][j] = j;
-        }
-    }
+    time(&startTime); // Store current time as start time
+    //printf("%s\n", ctime(&startTime));
 
-    for(int i = 0; i < NUM; i++)
-    {
-        for(int j = 0; j < NUM; j++)
-        {
-            printf("%2d", arr[i][j]);
-        }
-        printf("\n");
-    }*/
+    mainInitialize(board, &p1, &p2); // Initialize player and board
+    takeTurn(board, &p1, &p2); // Manage the game turn between two players
 
-    initializePlayer(&p1, &p2); // Initialize player
-    initializeBoard(board); // Initialize board
-    printBoard(board, p1, p2); // Print the board
+    time(&endTime); // Store current time as end time
+    //printf("%s\n", ctime(&endTime));
+    //printf("%.2lf\n", difftime(endTime, startTime));
 
-    takeTurn(board, &p1, &p2);
-
-    int min, sec;
-    time_t t2;
-    time(&t2);
-    printf("%s\n", ctime(&t2));
-    printf("%.2lf\n", difftime(t2, t1));
-    min = difftime(t2, t1) / 60;
-    sec = difftime(t2, t1) - (min * 60);
-    printf("Total duration: %d min %d sec", min, sec);
+    mainEnd(board, p1, p2, startTime, endTime); // Print out results when game is over
 
     return 0;
 }
