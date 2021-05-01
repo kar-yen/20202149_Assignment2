@@ -5,15 +5,12 @@
 #include "getPossibleMove.h"
 #include "updateBoard.h"
 
-int isEmpty(possibleMovePtr sPtr);
-void delete(possibleMovePtr *cPtr);
-void printList(possibleMovePtr cPtr);
-int findInList(possibleMovePtr *sPtr, int r, int c);
-
+// Function to handle the game between two players
 void takeTurn(disc board[][BOARD_SIZE], player *p1, player *p2)
 {
-    int turn = 1;
-    int pass = 0;
+    int turn = 1; // Variable to hold the number of game turn
+    int pass = 0; // Variable to calculate number of pass of players
+
     // Calculate space left on board
     int spaceLeft = BOARD_SIZE * BOARD_SIZE - (p1->score + p2->score);
 
@@ -23,70 +20,45 @@ void takeTurn(disc board[][BOARD_SIZE], player *p1, player *p2)
     {
         if(turn % 2 != 0) // Player 1's turn if odd number
         {
+            // Print turn to remind player 1.
             printf("Round %d.\nPlayer 1's turn.\n", turn);
-            getMove(board, p1, p2, 1, &pass);
-            printBoard(board, *p1, *p2);
+            getMove(board, p1, p2, 1, &pass); // Obtain move from player 1
+            printBoard(board, *p1, *p2); // Update and print board after a valid move
 
-            turn++; // Increment turn
+            turn++; // Increment of turn
         }
         else if(turn % 2 == 0) // Player 2's turn if even number
         {
+            // Print turn to remind player 2
             printf("Round %d.\nPlayer 2's turn.\n", turn);
-            getMove(board, p2, p1, 2, &pass);
-            printBoard(board, *p1, *p2);
+            getMove(board, p2, p1, 2, &pass); // Obtain move from player 2
+            printBoard(board, *p1, *p2); // Update and print board after a valid move
 
-            turn++;
+            turn++; // Increment of turn
         }
 
         // Update space left on board after each turn
         spaceLeft = BOARD_SIZE * BOARD_SIZE - (p1->score + p2->score);
-        printf("\n\n%d %d\n\n", spaceLeft, pass);
     }
 }
 
+// Function to obtain and check the move enter by user
 void getMove(disc board[][BOARD_SIZE], player *current, player *opponent, int num, int *pass)
 {
-    char move[3];
-    possibleMovePtr startPtr = NULL;
+    char move[3]; // Char array to store the coordinates enter by user
+    possibleMovePtr startPtr = NULL; // Initially there is no node in the list
 
-    printf("A move should be enter in the form of 'ld' where l is letter and d is digit. (E.g. a3)\n"
-           "Enter your move: ");
-    scanf("%s", move);
+    // Prompt user to enter move in specific format
+    printf("A move should be enter in the form of 'ld' where l is letter and d is digit. (E.g. a1)\n"
+           "Enter your move:");
+    scanf("%s", move); // Get user input
     fflush(stdin);
-    //printf("%s\n", move);
-    int r = move[1] - '1';
-    int c = move[0] - 'a';
 
-    printf("%c %c\n", move[0], move[1]);
-    printf("%d %d\n", r, c);
+    // Convert move into integer
+    int r = move[1] - '1'; // Variable r represents row
+    int c = move[0] - 'a'; // Variable c represents column
 
-    /*if((move[0] != 'p') && ((move[0] < 'a' || move[0] > 'h') || (move[1] < '1' || move[1] > '8')))
-    {
-        printf("Invalid move.\n");
-        do {
-            printf("aEnter your move again:");
-            scanf("%s", move);
-            fflush(stdin);
-        } while ((move[0] != 'p') && ((move[0] < 'a' || move[0] > 'h') || (move[1] < '1' || move[1] > '8')));
-        r = move[1] - '1';
-        c = move[0] - 'a';
-    }
-
-    if(board[r][c].colour != EMPTY && move[0] != 'p')
-    {
-        printf("Invalid move.\n");
-        do {
-            printf("bEnter your move again:");
-            scanf("%s", move);
-            fflush(stdin);
-            r = move[1] - '1';
-            c = move[0] - 'a';
-        } while (board[r][c].colour != EMPTY && move[0] != 'p');
-
-        //getMove(board, current, opponent, num);
-    }*/
-
-    // Check all the possible move of current player and store in a 2d array
+    // Check all the possible move of current player and store in the linked list
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -98,76 +70,46 @@ void getMove(disc board[][BOARD_SIZE], player *current, player *opponent, int nu
         }
     }
 
-    printList(startPtr);
+    //printList(startPtr);
 
-    if(isEmpty(startPtr))
+    // Check if the move enter by user is valid
+    if(isEmpty(startPtr)) // If there is no possible move for current player
     {
-        if(move[0] != 'p')
+        if(move[0] != 'p') // User does not pass the game
         {
-            printf("Invalid move.\n");
+            // Ask user to re-enter the move
             do {
-                printf("cEnter your move again:");
+                printf("Invalid move.\n");
+                printf("Enter your move again:");
                 scanf("%s", move);
                 fflush(stdin);
-                //r = move[1] - '1';
-                //c = move[0] - 'a';
-            } while (move[0] != 'p');
+
+                r = move[1] - '1';
+                c = move[0] - 'a';
+            } while (move[0] != 'p'); // Repeat prompting if user does not pass the game
         }
     }
-    else
+    else // If there are possible moves for current player
     {
+        // If user want to pass the game or entered an invalid move
         if(!(findInList(&startPtr, r, c)) || move[0] == 'p')
         {
-            printf("Invalid move.\n");
+            // Ask user to re-enter the move
             do {
-                printf("dEnter your move again:");
+                printf("Invalid move.\n");
+                printf("Enter your move again:");
                 scanf("%s", move);
                 fflush(stdin);
+
                 r = move[1] - '1';
                 c = move[0] - 'a';
             } while (!(findInList(&startPtr, r, c)) || !(isEmpty(startPtr)) && move[0] == 'p');
-            //getMove(board, current, opponent, num);
+            // Repeat prompting if user does not enter a valid move
         }
     }
 
-    /*if(!(isEmpty(startPtr)) && move[0] == 'p')
-    {
-        printf("Invalid move.\n");
-        do {
-            printf("dEnter your move again:");
-            scanf("%s", move);
-            fflush(stdin);
-            r = move[1] - '1';
-            c = move[0] - 'a';
-        } while (!(isEmpty(startPtr)) && move[0] == 'p');
-        //getMove(board, current, opponent, num);
-    }*/
-
-    if(move[0] != 'p' && board[r][c].colour == EMPTY)
-    {
-        board[r][c].colour = current->colour;
-        current->score += 1;
-
-        mainUpdate(board, current, opponent, r, c);
-        *pass = 0;
-        while(!(isEmpty(startPtr)))
-        {
-            delete(&startPtr);
-        }
-    }
-    else if(move[0] == 'p')
-    {
-        printf("There is no valid move. Player %d pass.", num);
-        *pass += 1;
-    }
-    else
-    {
-        printf("Error, invalid move.\n");
-    }
-
-    // Check if user input is a valid move by comparing with the array that store all possible moves.
-    // Prompt user to enter another move if it is not valid
-    // If loop when there is no possible move
+    // Place the move of player if a valid move is entered
+    placeMove(board, current, opponent, move, r, c, pass, num, &startPtr);
 }
 
 void printList(possibleMovePtr cPtr)
@@ -187,44 +129,79 @@ void printList(possibleMovePtr cPtr)
     }
 }
 
+// Function to check if the linked list is empty
 int isEmpty(possibleMovePtr sPtr)
 {
     // Return 1 if the list is empty, 0 otherwise
     return sPtr == NULL;
 }
 
+// Function to dequeue the node in the linked list
 void delete(possibleMovePtr *cPtr)
 {
     possibleMovePtr tempPtr = *cPtr;
     *cPtr = (*cPtr)->nextPtr;
-    free(tempPtr);
+    free(tempPtr); // Free current node in the list
 }
 
+// Function to find if the coordinates (r, c) enter by user is in the linked list of possible moves
+// Return 1 if coordinate is found in the list, 0 otherwise
+// sPtr = start pointer
 int findInList(possibleMovePtr *sPtr, int r, int c)
 {
+    // If the coordinate is found on the first node
     if(r == (*sPtr)->row && c == (*sPtr)->col)
     {
-        //printf("m %d %d %d %d\n", r, c, (*sPtr)->row, (*sPtr)->col);
         return 1;
     }
-    else
+    else // If the coordinate is not found on the first node
     {
-        possibleMovePtr prePtr = *sPtr;
-        possibleMovePtr cPtr = (*sPtr)->nextPtr;
+        // prePtr = previous pointer, cPtr = current pointer
+        possibleMovePtr prePtr = *sPtr; // Pointer to previous node in the list
+        possibleMovePtr cPtr = (*sPtr)->nextPtr; // Pointer to current node in the list
 
+        // Traverse the list to find the coordinate before reaching the end of list
         while (cPtr != NULL && (cPtr->row != r || cPtr->col != c))
         {
+            // Go to next node if current node is different with the coordinate
             prePtr = cPtr;
             cPtr = cPtr->nextPtr;
         }
 
-        if(cPtr != NULL)
+        if(cPtr != NULL) // If the coordinate is found in the list
         {
-            //printf("pre %d %d\n", prePtr->row, prePtr->col);
-            //printf("n %d %d %d %d\n", r, c, cPtr->row, cPtr->col);
             return 1;
         }
     }
 
     return 0;
+}
+
+// Function to handle place the move of player
+void placeMove(disc board[][BOARD_SIZE], player *current, player *opponent, const char move[], int r, int c, int *pass, int num, possibleMovePtr *sPtr)
+{
+    // If player does not pass the turn and the square has no disc on board
+    if(move[0] != 'p' && board[r][c].colour == EMPTY)
+    {
+        board[r][c].colour = current->colour; // Place the disc of current player on the square of board
+        current->score += 1; // Increment the score of player by 1
+
+        mainUpdate(board, current, opponent, r, c); // Update the score and board of current player after flipping opponent's disc
+        *pass = 0; // Reset the number of pass
+        while(!(isEmpty(*sPtr))) // If the linked list is not empty
+        {
+            // Free all the nodes in the list
+            delete(sPtr);
+        }
+    }
+    else if(move[0] == 'p') // If player pass the turn
+    {
+        // Print the message to the console
+        printf("There is no valid move. Player %d pass.\n", num);
+        *pass += 1; // Increment pass by 1
+    }
+    else // Simple error handling
+    {
+        printf("Error. Invalid move.\n");
+    }
 }
