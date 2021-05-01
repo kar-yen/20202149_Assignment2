@@ -8,7 +8,6 @@ void mainInitialize(disc board[][BOARD_SIZE], player *p1, player *p2)
     initializePlayer(p1, p2); // Initialize player
     initializeBoard(board); // Initialize board
     printBoard(board, *p1, *p2); // Print the board
-
 }
 
 // Function to initialize player
