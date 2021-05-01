@@ -2,16 +2,24 @@
 #include <string.h>
 #include "initialization.h"
 
-void convertNewLine(char str[]);
-void gameRules();
+// Main function to initialize the game
+void mainInitialize(disc board[][BOARD_SIZE], player *p1, player *p2)
+{
+    initializePlayer(p1, p2); // Initialize player
+    initializeBoard(board); // Initialize board
+    printBoard(board, *p1, *p2); // Print the board
 
+}
+
+// Function to initialize player
 void initializePlayer(player *p1, player *p2)
 {
-    char choice;
-    printf("\t***   Welcome to Othello!   ***\n\n");
+    char choice; // Variable to hold user's choice
+
+    printf("\n\t\t***   Welcome to Othello!   ***\n\n");
 
     // Prompt user to see if they want to know game rules
-    printf("Enter 1 if you wish to read the rules before game start. Otherwise, any other keys to start game.\n");
+    printf("Enter 1 if you wish to read the rules before game start. Otherwise, press any other keys to start game.\n");
     scanf("%c", &choice);
     fflush(stdin);
 
@@ -22,27 +30,29 @@ void initializePlayer(player *p1, player *p2)
     }
 
     printf("\nGame starts!\n");
+
     // Ask and get player 1's name
     printf("Please enter name of Player 1 (Black):");
     fgets(p1->name, NAME_LENGTH, stdin);
-    p1->colour = BLACK; // Black will be the first player
-    p1->score = 2; // Two discs on the board
+    convertNewLine(p1->name); // Convert new line to \0
+
+    p1->colour = BLACK; // Assign black to first player
+    p1->score = 2; // Place two black discs on the board
 
     fflush(stdin);
 
     // Ask and get player 2's name
     printf("Please enter name of Player 2 (White):");
     fgets(p2->name, NAME_LENGTH, stdin);
-    p2->colour = WHITE; // White will be the second player
-    p2->score = 2; // Two discs on board
+    convertNewLine(p2->name); // Convert new line to \0
+
+    p2->colour = WHITE; // Assign white to second player
+    p2->score = 2; // Place two white discs on board
 
     fflush(stdin);
-
-    // Convert new line to \0
-    convertNewLine(p1->name);
-    convertNewLine(p2->name);
 }
 
+// Function to convert new line to \0 in string
 void convertNewLine(char str[])
 {
     if(str[strlen(str) - 1] == '\n')
@@ -51,9 +61,10 @@ void convertNewLine(char str[])
     }
 }
 
+// Function to initialize board
 void initializeBoard(disc board[][BOARD_SIZE])
 {
-    // Initialize the board
+    // Place two black and white discs on the board
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -62,13 +73,13 @@ void initializeBoard(disc board[][BOARD_SIZE])
             {
                 if(j == 3)
                 {
-                    // Place white disc on board with coordinates d4
+                    // Place white disc on board at coordinates d4
                     board[i][j].colour = WHITE;
                 }
 
                 else if(j == 4)
                 {
-                    // Place black disc on board with coordinates e4
+                    // Place black disc on board at coordinates e4
                     board[i][j].colour = BLACK;
                 }
 
@@ -83,13 +94,13 @@ void initializeBoard(disc board[][BOARD_SIZE])
             {
                 if(j == 3)
                 {
-                    // Place black disc on board with coordinates d5
+                    // Place black disc on board at coordinates d5
                     board[i][j].colour = BLACK;
                 }
 
                 else if(j == 4)
                 {
-                    // Place white disc on board with coordinates e5
+                    // Place white disc on board at coordinates e5
                     board[i][j].colour = WHITE;
                 }
 
@@ -105,17 +116,15 @@ void initializeBoard(disc board[][BOARD_SIZE])
                 // Empty for the remaining position
                 board[i][j].colour = EMPTY;
             }
-
-            // Store the coordinates of the disc
-            board[i][j].row = i;
-            board[i][j].col = j;
         }
     }
 }
 
+// Function to print the board and discs
 void printBoard(disc board[][BOARD_SIZE], player p1, player p2)
 {
     int z;
+
     // Print the score of each player
     printf("\n\tScore: %s (Black) %d:%d %s (White)", p1.name, p1.score, p2.score, p2.name);
 
@@ -129,20 +138,23 @@ void printBoard(disc board[][BOARD_SIZE], player p1, player p2)
     // Visualize the board by printing disc and vertical lines for board
     for (size_t i = 0; i < BOARD_SIZE; i++)
     {
-        // Row index from 1 to 8
+        // Row index from 1 to 8 on the left of board
         printf("\n\t%d |", i+1);
 
         // Print the words 'B' and 'W' to represent the disc on board
         for (size_t j = 0; j < BOARD_SIZE; j++)
         {
+            // If black disc is on the current square of board
             if (board[i][j].colour == BLACK)
             {
                 printf(" B |");
             }
+            // If white disc is on the current square on board
             else if (board[i][j].colour == WHITE)
             {
                 printf(" W |");
             }
+            // If no disc on the current square of board
             else
             {
                 printf("   |");
@@ -157,7 +169,7 @@ void printBoard(disc board[][BOARD_SIZE], player p1, player p2)
         }
     }
 
-    // Column index from a to h
+    // Column index from a to h on the bottom of board
     printf("\n\t    ");
     for (z = 1; z <= BOARD_SIZE; z++)
     {
