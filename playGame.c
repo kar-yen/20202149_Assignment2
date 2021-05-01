@@ -70,8 +70,6 @@ void getMove(disc board[][BOARD_SIZE], player *current, player *opponent, int nu
         }
     }
 
-    //printList(startPtr);
-
     // Check if the move enter by user is valid
     if(isEmpty(startPtr)) // If there is no possible move for current player
     {
@@ -110,23 +108,6 @@ void getMove(disc board[][BOARD_SIZE], player *current, player *opponent, int nu
 
     // Place the move of player if a valid move is entered
     placeMove(board, current, opponent, move, r, c, pass, num, &startPtr);
-}
-
-void printList(possibleMovePtr cPtr)
-{
-    if(cPtr == NULL)
-    {
-        printf("List is empty\n");
-    }
-    else
-    {
-        printf("Possible move:\n");
-        while(cPtr != NULL)
-        {
-            printf("%d %d\n", cPtr->row, cPtr->col);
-            cPtr = cPtr->nextPtr;
-        }
-    }
 }
 
 // Function to check if the linked list is empty
