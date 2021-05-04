@@ -21,7 +21,7 @@ void takeTurn(disc board[][BOARD_SIZE], player *p1, player *p2)
         if(turn % 2 != 0) // Player 1's turn if odd number
         {
             // Print turn to remind player 1.
-            printf("Round %d.\nPlayer 1's turn.\n", turn);
+            printf("Round %d.\n%s's turn.\n", turn, p1->name);
             getMove(board, p1, p2, 1, &pass); // Obtain move from player 1
             printBoard(board, *p1, *p2); // Update and print board after a valid move
 
@@ -30,7 +30,7 @@ void takeTurn(disc board[][BOARD_SIZE], player *p1, player *p2)
         else if(turn % 2 == 0) // Player 2's turn if even number
         {
             // Print turn to remind player 2
-            printf("Round %d.\nPlayer 2's turn.\n", turn);
+            printf("Round %d.\n%s's turn.\n", turn, p2->name);
             getMove(board, p2, p1, 2, &pass); // Obtain move from player 2
             printBoard(board, *p1, *p2); // Update and print board after a valid move
 
