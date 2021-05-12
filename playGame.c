@@ -158,7 +158,7 @@ int findInList(possibleMovePtr *sPtr, int r, int c)
     return 0;
 }
 
-// Function to place the move of player
+// Function to h place the move of player
 void placeMove(disc board[][BOARD_SIZE], player *current, player *opponent, const char move[], int r, int c, int *pass, int num, possibleMovePtr *sPtr)
 {
     // If player does not pass the turn and the square has no disc on board
