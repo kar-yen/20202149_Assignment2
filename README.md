@@ -56,8 +56,10 @@ who has the majority of discs turned to display their colour when the last move 
 * The final result will be save in a text file named 'othello-results.txt' before the program exits.
 * The text file can be found in current directory.
 * Example of text file:
-a) ![Alt text](./assignment2_img/Final1_textfile.PNG "Full Board_Text file")
+a) 
+![Alt text](./assignment2_img/Final1_textfile.PNG "Full Board_Text file")
 &nbsp;
 
-b) ![Alt text](./assignment2_img/Final2_textfile.PNG "No Move_Text file")
+b) 
+![Alt text](./assignment2_img/Final2_textfile.PNG "No Move_Text file")
 &nbsp;
