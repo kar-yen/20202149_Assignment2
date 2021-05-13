@@ -29,7 +29,7 @@ void findMove(disc board[][BOARD_SIZE], possibleMovePtr *sPtr, player opponent, 
                 continue;
             }
 
-            // Ignore own disc
+            // Ignore the relative disc of current player
             if(i == row && j == column)
             {
                 continue;
