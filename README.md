@@ -57,5 +57,4 @@ who has the majority of discs turned to display their colour when the last move 
 * The text file can be found in current directory.
 * Example of text file:
 &nbsp;
-
-a) 
+ &nbsp; &nbsp; &nbsp; &nbsp; a)
