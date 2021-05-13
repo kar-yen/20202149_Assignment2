@@ -64,7 +64,7 @@ who has the majority of discs turned to display their colour when the last move 
  &nbsp; &nbsp; &nbsp; &nbsp; ![Alt text](./assignment2_img/Final1.PNG "Full Board_Text File")
 &nbsp;
 
- &nbsp; &nbsp; &nbsp; &nbsp; a)
+ &nbsp; &nbsp; &nbsp; &nbsp; b)
 &nbsp;
  
  &nbsp; &nbsp; &nbsp; &nbsp; ![Alt text](./assignment2_img/Final2.PNG "No Move_Text File")
