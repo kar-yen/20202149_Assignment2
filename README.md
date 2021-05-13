@@ -58,6 +58,9 @@ who has the majority of discs turned to display their colour when the last move 
 * Example of text file:
 &nbsp;
 
- &nbsp; &nbsp; &nbsp; &nbsp; a)![Alt text](./assignment2_img/Final1.PNG "Full Board")
+ &nbsp; &nbsp; &nbsp; &nbsp; a)
+&nbsp;
+ 
+ &nbsp; &nbsp; &nbsp; &nbsp; ![Alt text](./assignment2_img/Final1.PNG "Full Board")
 &nbsp;
 
