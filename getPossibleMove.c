@@ -4,8 +4,8 @@
 #include "getPossibleMove.h"
 
 // Function to find all the possible moves of current player
-// Integer row hold the value of the row of current player's disc
-// Integer column hold the value of the column of current player's disc
+// Integer variable row holds the value of the row of current player's disc
+// Integer variable column holds the value of the column of current player's disc
 void findMove(disc board[][BOARD_SIZE], possibleMovePtr *sPtr, player opponent, int row, int column)
 {
     // Check if opponent's disc is beside current player's disc
